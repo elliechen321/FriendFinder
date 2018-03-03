@@ -184,6 +184,7 @@
         var minIndex;
         $.get("/api/friends",function(friendsList){
             existingFriends = friendsList;
+            console.log(existingFriends);
             existingFriends.forEach(function(friend){
                 finalScore.push(compareScore(me,friend));
             })
@@ -194,17 +195,20 @@
             console.log(existingFriends);
             console.log(existingFriends[0].name);
             $(".modal-body").append("<p>" + existingFriends[minIndex].name +"</p>");
-        })
-        $.post("/api/friends",me,function(data){
-            console.log(data);
-        })
-        })
 
-    function compareScore(myScore,friendsScore){
+            $.post("/api/friends",me,function(data){
+                console.log(data);
+            })
+        })
+    })
+
+    function compareScore(me,friend){
         var totalScore = 0;
         for(var i=0; i<10; i++){
-            totalScore += Math.abs(parseInt(myScore.scores[i]) - parseInt(friendsScore.scores[i]))
-            // console.log(Math.abs(parseInt(myScore.scores[i])));
+            totalScore += Math.abs(parseInt(me.scores[i]) - parseInt(friend.scores[i]))
+            console.log("for"+ i + ":" + Math.abs(parseInt(friend.scores[i])));
+            // console.log("for"+ i + ":" + Math.abs(parseInt(myScore.scores[i])));
+            // console.log("total score" + totalScore);
             // console.log(totalScore);
         }
         return totalScore;
